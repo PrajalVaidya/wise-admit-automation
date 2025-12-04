@@ -1,0 +1,44 @@
+{
+  "validUser": {
+    "email": "prajalvaidya200011@gmail.com",
+    "password": "Prajal@123"
+  },
+  "invalidUsers": [
+    {
+      "scenario": "Invalid email format",
+      "email": "invalid-email",
+      "password": "Test@123",
+      "expectedError": "Please enter a valid email address"
+    },
+    {
+      "scenario": "Empty email",
+      "email": "",
+      "password": "Test@123",
+      "expectedError": "Email is required"
+    },
+    {
+      "scenario": "Empty password",
+      "email": "test@example.com",
+      "password": "",
+      "expectedError": "Password is required"
+    },
+    {
+      "scenario": "Both fields empty",
+      "email": "",
+      "password": "",
+      "expectedError": "Email is required"
+    },
+    {
+      "scenario": "Wrong password",
+      "email": "prajalvaidya200011@gmail.com",
+      "password": "WrongPassword123",
+      "expectedError": "Invalid credentials"
+    },
+    {
+      "scenario": "Non-existent user",
+      "email": "nonexistent@example.com",
+      "password": "Test@123",
+      "expectedError": "User not found"
+    }
+  ]
+}

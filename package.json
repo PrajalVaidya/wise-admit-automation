@@ -1,0 +1,27 @@
+{
+  "name": "wise-admit-automation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "test:headed": "cypress run --headed",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:edge": "cypress run --browser edge",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:positive": "cypress run --spec 'cypress/e2e/signin-positive.cy.js'",
+    "cy:run:negative": "cypress run --spec 'cypress/e2e/signin-negative.cy.js'",
+    "report": "cypress run && node cypress/reports/merge-reports.js",
+    "generate:excel": "node generate-test-cases-excel.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^15.7.1",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "exceljs": "^4.4.0"
+  }
+}

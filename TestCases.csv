@@ -1,0 +1,110 @@
+Test ID,Test Scenario,Test Type,Description,Pre-conditions,Test Steps,Test Data,Expected Result,Status,Priority,Automated
+TC-001,Valid credentials from fixture,Positive,Verify user can sign in with valid credentials stored in fixture file,"1. User has valid WiseAdmit account
+2. User is on sign-in page","1. Navigate to sign-in page
+2. Load credentials from fixture
+3. Enter valid email
+4. Enter valid password
+5. Click Sign In button",Email: From fixture users.json | Password: From fixture users.json,"1. User is successfully logged in
+2. User is redirected to dashboard
+3. URL changes from /sign-in",Pass,High,Yes
+TC-002,Valid credentials from environment,Positive,Verify user can sign in with credentials from environment variables,"1. User has valid WiseAdmit account
+2. Credentials set in cypress.env.json
+3. User is on sign-in page","1. Navigate to sign-in page
+2. Load credentials from env
+3. Enter valid email
+4. Enter valid password
+5. Click Sign In button",Email: From cypress.env.json | Password: From cypress.env.json,"1. User is successfully logged in
+2. User is redirected to dashboard",Pass,High,Yes
+TC-003,Page elements visibility,Positive,Verify all sign-in page elements are displayed correctly,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Verify email input is visible
+3. Verify password input is visible
+4. Verify sign-in button is visible
+5. Verify sign-in button is enabled",N/A,"1. All form elements are visible
+2. Sign-in button is enabled",Pass,Medium,Yes
+TC-004,Successful login redirect,Positive,Verify user is redirected after successful login,"1. User has valid credentials
+2. User is on sign-in page","1. Navigate to sign-in page
+2. Enter valid credentials
+3. Click Sign In
+4. Wait for redirect
+5. Verify URL changed",Valid email and password,"1. User is redirected
+2. URL does not contain /sign-in
+3. Redirect completes within 10 seconds",Pass,High,Yes
+TC-005,Session persistence,Positive,Verify session is maintained after successful login,"1. User has valid credentials
+2. User is on sign-in page","1. Navigate to sign-in page
+2. Enter valid credentials
+3. Click Sign In
+4. Verify session cookie/token exists",Valid email and password,"1. Session cookie is created
+2. OR localStorage token exists",Pass,Medium,Yes
+TC-006,Empty email field,Negative,Verify error when email field is left empty,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Leave email field empty
+3. Enter password
+4. Click Sign In
+5. Verify error message",Email: Empty | Password: Test@123,"1. Error message is displayed
+2. User remains on sign-in page
+3. Login is prevented",Pass,High,Yes
+TC-007,Empty password field,Negative,Verify error when password field is left empty,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Enter email
+3. Leave password field empty
+4. Click Sign In
+5. Verify error message",Email: test@example.com | Password: Empty,"1. Error message is displayed
+2. User remains on sign-in page
+3. Login is prevented",Pass,High,Yes
+TC-008,Both fields empty,Negative,Verify error when both email and password are empty,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Leave both fields empty
+3. Click Sign In
+4. Verify error message",Email: Empty | Password: Empty,"1. Error message is displayed
+2. User remains on sign-in page
+3. Form validation triggers",Pass,High,Yes
+TC-009,Invalid email format,Negative,Verify error for invalid email format,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Enter invalid email format
+3. Enter valid password
+4. Click Sign In
+5. Verify email validation error",Email: invalid-email | Password: Test@123,"1. Email validation error shown
+2. User remains on sign-in page
+3. Login is prevented",Pass,High,Yes
+TC-010,Wrong password,Negative,Verify error when correct email but wrong password is entered,"1. User has valid account
+2. User is on sign-in page","1. Navigate to sign-in page
+2. Enter valid email
+3. Enter incorrect password
+4. Click Sign In
+5. Verify authentication error",Email: test@example.com | Password: WrongPassword123,"1. Authentication error displayed
+2. User remains on sign-in page
+3. Login is denied",Pass,High,Yes
+TC-011,Non-existent user,Negative,Verify error when attempting to sign in with non-existent account,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Enter non-existent email
+3. Enter any password
+4. Click Sign In
+5. Verify user not found error",Email: nonexistent@example.com | Password: Test@123,"1. User not found error shown
+2. User remains on sign-in page
+3. Login is denied",Pass,High,Yes
+TC-012,Multiple invalid scenarios,Negative,Test all invalid scenarios from fixture data,"1. User is on sign-in page
+2. Invalid user data in fixture","1. Load invalid users from fixture
+2. For each invalid user:
+   a. Clear form
+   b. Enter credentials
+   c. Click Sign In
+   d. Verify error
+   e. Verify stay on page",Multiple scenarios from users.json,"1. Each scenario shows appropriate error
+2. User remains on sign-in page for all
+3. No scenario allows login",Pass,Medium,Yes
+TC-013,SQL injection prevention,Negative,Verify application prevents SQL injection attacks,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Enter SQL injection strings in email
+3. Enter SQL injection strings in password
+4. Click Sign In
+5. Verify injection is prevented","Email: ' OR '1'='1 | Password: admin'--","1. SQL injection is prevented
+2. User is not logged in
+3. No database errors exposed",Pass,Critical,Yes
+TC-014,Special characters handling,Negative,Verify application handles special characters in credentials,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Enter email with special chars
+3. Enter password with special chars
+4. Click Sign In
+5. Verify graceful handling",Email: test+special@example.com | Password: P@$$w0rd!#$%,"1. Special characters handled correctly
+2. Either error shown or login succeeds
+3. No application crash",Pass,Medium,Yes
+TC-015,Password security,Negative,Verify password is not exposed in page source or network,"1. User is on sign-in page","1. Navigate to sign-in page
+2. Enter password
+3. Verify password field type
+4. Check page source
+5. Verify password not visible",Password: SecretPassword123,"1. Password field has type='password'
+2. Password not visible in page source
+3. Password is masked in UI",Pass,Critical,Yes
