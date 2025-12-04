@@ -535,3 +535,5 @@ npm run cy:open
 - **Improvement:** Display password requirements, add "Forgot Password" link, and implement account lockout warnings.
 - **Benefit:** Builds user trust and secures accounts against unauthorized access.
 - **Implementation:** Show password strength meter and clear links for account recovery.
+
+## NOTE :Test cases included with in the repository files
