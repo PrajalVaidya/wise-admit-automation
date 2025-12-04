@@ -443,3 +443,95 @@ npm run cy:open
 **Status**: ✅ All tests passing with actual WiseAdmit application
 
 **Note**: Before running tests, ensure you have a valid WiseAdmit account and have updated the credentials in `cypress.env.json` or `cypress/fixtures/users.json`.
+
+**Five things that could break the Sign-In process in the future.**
+
+## 1. UI Framework Upgrade or Redesign
+
+- **Risk:** Updating MUI or redesigning the UI may break current selectors.
+- **Current Situation:** Selectors like `.MuiTypography-root` and text-based matches such as `:contains("Log in")` are fragile.
+- **Mitigation:**
+  - Add `data-testid` attributes to elements.
+  - Use multiple fallback selectors to ensure stability.
+
+---
+
+## 2. Authentication Flow Modifications
+
+- **Risk:** The login flow could change (single-step login, MFA, or different input sequence).
+- **Current Process:** Email → Continue → Password → Login
+- **Mitigation:**
+  - Implement flexible logic for authentication.
+  - Handle conditional flows and optional steps in tests.
+
+---
+
+## 3. API / Backend Behavior Changes
+
+- **Risk:** API responses, error messages, or validation rules could change.
+- **Current Concern:** Error strings like `"Invalid Credentials"` or `"Failed to get student"` may not be consistent.
+- **Mitigation:**
+  - Use partial text matching instead of exact messages.
+  - Validate functionality rather than exact string content.
+
+---
+
+## 4. Dynamic Auto-Generated Element IDs
+
+- **Risk:** MUI generates dynamic IDs such as `id=":r2:"` which change on every deployment.
+- **Current Problem:** These IDs cannot be used as stable selectors.
+- **Mitigation:**
+  - Avoid using dynamic IDs in tests.
+  - Use stable attributes like `data-testid` or predictable class names.
+
+---
+
+## 5. Third-Party Service Dependencies
+
+- **Risk:** Services such as CAPTCHA, analytics scripts, or CDNs may interfere with automated tests.
+- **Current State:** CAPTCHA is not yet implemented, but could be added later.
+- **Mitigation:**
+  - Use a test environment without these restrictions.
+  - Employ network stubbing or mocks where necessary.
+
+---
+
+**Five improvements for the website.**
+
+## 1. Add Test Automation Attributes
+
+- **Improvement:** Add `data-testid` attributes to all interactive elements.
+- **Benefit:** Makes automated tests significantly more robust and less prone to breaking when styles or structure change.
+- **Implementation:** `<input data-testid="email-input" ... />` instead of relying on generic classes.
+
+---
+
+## 2. Improve Error Messages and Validation Feedback
+
+- **Improvement:** Provide specific, actionable error messages and real-time validation.
+- **Benefit:** Enhances user experience by clearly explaining what went wrong (e.g., "Invalid email format" vs "Error").
+- **Implementation:** Use `aria-live` regions for errors and validate input formats as the user types.
+
+---
+
+## 3. Implement Progressive Enhancement for Sign-In Flow
+
+- **Improvement:** Show both email and password fields initially or provide a clear visual progress indicator.
+- **Benefit:** Reduces user confusion about the multi-step process and ensures functionality even if JavaScript fails.
+- **Implementation:** Display disabled password field that enables after valid email entry.
+
+---
+
+## 4. Add "Remember Me" and Social Login Options
+
+- **Improvement:** Include a "Remember Me" checkbox and options to log in via Google/LinkedIn.
+- **Benefit:** Increases user convenience and reduces friction for returning users.
+- **Implementation:** Standard OAuth integrations and persistent session tokens.
+
+---
+
+## 5. Enhance Security and User Account Protection
+
+- **Improvement:** Display password requirements, add "Forgot Password" link, and implement account lockout warnings.
+- **Benefit:** Builds user trust and secures accounts against unauthorized access.
+- **Implementation:** Show password strength meter and clear links for account recovery.
